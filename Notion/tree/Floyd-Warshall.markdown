@@ -7,15 +7,15 @@ dist[][] 배열을 입력받은 인접 행렬로 초기화
 (단, dist[i][i]는 항상 1로 설정)
 
 for k from 1 to N:       // 거쳐가는 도시
-for i from 1 to N:   // 출발 도시
-for j from 1 to N: // 도착 도시
-if dist[i][k] == 1 AND dist[k][j] == 1:
-dist[i][j] = 1 // 연결성 업데이트
+    for i from 1 to N:   // 출발 도시
+        for j from 1 to N: // 도착 도시
+            if dist[i][k] == 1 AND dist[k][j] == 1:
+                dist[i][j] = 1 // 연결성 업데이트
 
 // 메인 로직
 for i from 0 to M-2:
-start = 여행_계획[i]
-end = 여행_계획[i+1]
-if dist[start][end] == 0:
-return "NO"
+    start = 여행_계획[i]
+    end = 여행_계획[i+1]
+    if dist[start][end] == 0:
+        return "NO"
 return "YES"
