@@ -19,3 +19,6 @@ rootX = find(x)
 rootY = find(y)
 if rootX != rootY:
 parent[rootY] = rootX // 한쪽의 부모를 다른 쪽에 연결
+
+
+사사사
