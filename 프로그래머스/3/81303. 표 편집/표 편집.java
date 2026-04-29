@@ -70,7 +70,8 @@ class Solution {
                         break;
                 }
             }
-
+// ----------------------------------------------------------------------------
+            // 3. 결과 생성
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < check.length; i++) {
                 if(check[i]){   // true = 삭제됨
