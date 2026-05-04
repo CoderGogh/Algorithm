@@ -1,5 +1,5 @@
 import java.util.*;
-class Solution {
+    /*class Solution {
         public int[] solution(String[] operations) {
             // priorityQueue * 2 + map(중복처리) 사용
             PriorityQueue<Integer> minHeap = new PriorityQueue<>();
@@ -51,5 +51,39 @@ class Solution {
                 heap.poll();
             }
             return heap.peek();
+        }
+    }*/
+    class Solution{
+        public int[] solution(String[] operations){
+            TreeMap<Integer,Integer> map = new TreeMap<>();
+            int totalSize = 0;
+
+            for (String op: operations
+                 ) {
+                String[] line = op.split(" ");
+                String command = line[0];
+                int num = Integer.parseInt(line[1]);
+
+                if(command.equals("I")){
+                    map.put(num, map.getOrDefault(num,0)+1);
+                    totalSize++;
+                }else{
+                    if(totalSize == 0 ){
+                        continue;
+                    }
+                    int targetKey = (num == 1) ? map.lastKey() : map.firstKey();
+                    int count = map.get(targetKey);
+                    if(count == 1){
+                        map.remove(targetKey);
+                    }else{
+                        map.put(targetKey,count-1);
+                    }
+                    totalSize--;
+                }
+            }
+            if(totalSize == 0){
+                return new int[]{0,0};
+            }
+            return new int[]{map.lastKey(),map.firstKey()};
         }
     }
