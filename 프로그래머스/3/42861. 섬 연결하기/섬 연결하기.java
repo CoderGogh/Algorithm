@@ -1,31 +1,28 @@
 import java.util.*;
 class Solution {
-        // 클래스로 선언 vs 배열 인덱스로 사용
-        int[] parent;
+        int [] parent;
         public int solution(int n, int[][] costs) {
             int answer = 0;
-            int brideges = 0;
-            
-            Arrays.sort(costs, (a, b) -> a[2] - b[2]);
+            int bridges = 0;
+                
+            Arrays.sort(costs, (a,b) -> a[2] - b[2]);   // 오름차순
             
             parent = new int[n];
-            for (int i = 0; i < n; i++) {
-                parent[i] = i;  // 자기자신
+            for(int i = 0; i < n; i++){
+                parent[i] = i;
             }
-            
             for (int[] edge : costs) {
-                int a = edge[0];
+                int a =  edge[0];
                 int b = edge[1];
                 int cost = edge[2];
                 
                 if(find(a) != find(b)){
                     union(a,b);
+                    bridges++;
                     answer += cost;
-                    brideges++;
-                    
-                    if(brideges == n-1){
+                    if(bridges == n-1){
                         break;
-                    }
+                    }   
                 }
             }
             return answer;
@@ -36,11 +33,11 @@ class Solution {
             }
             return parent[x] = find(parent[x]);
         }
-        void union(int x, int y){
-            int rootX = find(x);
-            int rootY = find(y);
-            if(rootX != rootY){
-                parent[rootX] = rootY;
+        void union(int i, int j){
+            int x = find(i);
+            int y = find(j);
+            if(x != y){
+                parent[x] = parent[y];
             }
         }
     }
