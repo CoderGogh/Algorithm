@@ -4,7 +4,6 @@ class Solution {
 i -> i or i+1 until height = triangle.length
 */
             int height = triangle.length;
-            // 두 번째 줄(인덱스 1)부터 시작해서 맨 아래 줄까지 내려갑니다.
             for (int i = 1; i < height; i++) {
                 for (int j = 0; j <= i; j++) {
                     if (j == 0) {
