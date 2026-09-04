@@ -1,37 +1,39 @@
 import java.util.*;
 class Solution {
-        public int solution(int[][] jobs) {
-            // job[i][j]
-            // 1차배열의 인덱스(작업번호_3순위)
-            // 2차배열의 인덱스(i,j) j: 소요시간(1순위) -> i: 요청시점(2순위)
-
-            // 0. 초기화
-            int time = 0;
-            int completed = 0;
-            int volume = jobs.length;
-            int jobIndex = 0;
-            int responseTime =0;
-            Arrays.sort(jobs,(a, b)-> a[0] - b[0]);         // 요청시점을 기준으로 sort
-            PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)-> a[1] - b[1]); // 소요시간이 짧은 것으로 sort
-
-
-            // while(작업의 갯수 완료 -- ){}
-            while(completed < volume){
-                // 2. 현재시간을 기준으로, 요청시점 이전에 해당되는 모든 작업을 queue에 add
-                while (jobIndex < jobs.length && time >= jobs[jobIndex][0]){
-                    pq.add(jobs[jobIndex++]);
+    public int solution(int[][] jobs) {
+        int processing_time = 0;
+        int jobcnt = jobs.length;
+        int current_time = 0;
+        int index = 0;
+        
+        Arrays.sort(jobs,(a,b) -> a[0] - b[0]);
+        // int[] job = {요청시각,소요시각}
+        // 작업 소요시간 > 작업 요청시각 > 작업 번호
+        PriorityQueue<int[]> queue = new PriorityQueue<>(
+            (a,b)->{
+                if(a[1] != b[1]){
+                    return a[1] - b[1];
                 }
-                // 큐에 다음 작업이 있거나 없거나
-                if(pq.isEmpty()){   // 없는 경우
-                    // 다음 작업 시작시간으로 이동
-                    time = jobs[jobIndex][0];
-                }else{  // 큐에 다음 작업이 있는 경우
-                    int[] job = pq.poll();
-                    responseTime += (time + job[1] - job[0]);
-                    time += job[1];
-                    completed ++;
+                if(a[0] != b[0]){
+                    return a[0] - b[0];
                 }
+                return 0;
+            });
+        
+        while(index < jobcnt || !queue.isEmpty()){
+            
+            while(index < jobcnt && jobs[index][0] <= current_time){
+                queue.offer(jobs[index]);
+                index++;
             }
-            return responseTime/volume;
+            if(queue.isEmpty()){
+                current_time = jobs[index][0];
+                continue;
+            }
+            int[] process = queue.poll();
+            current_time += process[1];
+            processing_time += current_time - process[0];
         }
+        return processing_time/jobcnt;
     }
+}
