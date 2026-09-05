@@ -1,13 +1,18 @@
+import java.util.*;
+
 class Solution {
-        public int solution(int[][] sizes) {
-            int maxRow = 0;
-            int maxCol = 0;
-            for (int[] size : sizes) {
-                int currentMax = Math.max(size[0], size[1]);
-                int currentMin = Math.min(size[0], size[1]);
-                maxRow = Math.max(maxRow, currentMax);
-                maxCol = Math.max(maxCol, currentMin);
-            }
-            return maxRow * maxCol;
+    public int solution(int[][] sizes) {
+        int maxW = 0;
+        int maxH = 0;
+        for (int i = 0; i < sizes.length; i++) {
+            int w = sizes[i][0];
+            int h = sizes[i][1];
+            int longer = Math.max(w, h);
+            int shorter = Math.min(w, h);
+            maxW = Math.max(maxW, longer);
+            maxH = Math.max(maxH, shorter);
         }
+        
+        return maxW * maxH;
     }
+}
